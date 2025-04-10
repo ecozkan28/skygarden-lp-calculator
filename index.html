@@ -38,11 +38,11 @@
   const output = document.getElementById('output');
 
   function formatNumber(num) {
-    return num.toLocaleString(undefined, {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2
-    });
-  }
+  return num.toLocaleString("en-US", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  });
+}
 
   function unformatNumber(str) {
     return parseFloat(str.replace(/,/g, '')) || 0;
