@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Skygarden Miami LP Calculator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <img src="skygarden-logo.png" alt="Skygarden Miami" class="logo" />
+    <h1>Skygarden Miami LP Return Calculator</h1>
+    <p class="subtext">Interest Rate: 15% &nbsp;&nbsp;|&nbsp;&nbsp; Success Fee: 3%</p>
+
+    <label>Investment Amount ($):</label>
+    <input type="number" id="amount" value="2500000" />
+
+    <label>Investment Duration (Years):</label>
+    <input type="number" id="years" value="2" />
+
+    <div class="result">
+      <h3>Results:</h3>
+      <p><strong>Net Payout to LP:</strong> <span id="output">$0</span></p>
+    </div>
+
+    <p class="footer">Skygarden Miami – Confidential Model. For illustration purposes only.</p>
+  </div>
+
+  <script>
+    function calculate() {
+      const amount = parseFloat(document.getElementById('amount').value);
+      const years = parseFloat(document.getElementById('years').value);
+      const interestRate = 0.15;
+      const successFeeRate = 0.03;
+      const totalReturn = amount * Math.pow(1 + interestRate, years);
+      const netPayout = totalReturn + (amount * successFeeRate);
+      document.getElementById('output').textContent = "$" + netPayout.toLocaleString();
+    }
+
+    document.getElementById('amount').addEventListener('input', calculate);
+    document.getElementById('years').addEventListener('input', calculate);
+    calculate();
+  </script>
+</body>
+</html>
