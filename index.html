@@ -28,19 +28,39 @@
   </div>
 
   <script>
-    function calculate() {
-      const amount = parseFloat(document.getElementById('amount').value);
-      const years = parseFloat(document.getElementById('years').value);
-      const interestRate = 0.15;
-      const successFeeRate = 0.03;
-      const totalReturn = amount * Math.pow(1 + interestRate, years);
-      const netPayout = totalReturn + (amount * successFeeRate);
-      document.getElementById('output').textContent = "$" + netPayout.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    }
+  const amountInput = document.getElementById('amount');
+  const yearsInput = document.getElementById('years');
+  const output = document.getElementById('output');
 
-    document.getElementById('amount').addEventListener('input', calculate);
-    document.getElementById('years').addEventListener('input', calculate);
-    calculate();
-  </script>
-</body>
-</html>
+  function formatNumber(num) {
+    return num.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  function calculate() {
+    let rawAmount = parseFloat(amountInput.value.replace(/[^0-9.]/g, '')) || 0;
+    let years = parseFloat(yearsInput.value) || 0;
+
+    const interestRate = 0.15;
+    const successFeeRate = 0.03;
+
+    const totalReturn = rawAmount * Math.pow(1 + interestRate, years);
+    const netPayout = totalReturn + (rawAmount * successFeeRate);
+
+    output.textContent = "$" + formatNumber(netPayout);
+
+    // update the input field with formatted value
+    amountInput.value = formatNumber(rawAmount);
+  }
+
+  amountInput.addEventListener('blur', calculate);  // Format on blur
+  amountInput.addEventListener('input', () => {
+    // Let the user type freely without formatting
+    const raw = amountInput.value.replace(/[^0-9.]/g, '');
+    amountInput.dataset.raw = raw;
+  });
+
+  yearsInput.addEventListener('input', calculate);
+
+  // Initial calculation
+  calculate();
+</script>
